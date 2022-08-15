@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<title>Page Title</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="">
+<style>
+</style>
+<body>
+
+<table>
+  <tr>
+    <td>Monday</td>
+    <td>Tuesday</td>
+    <td>Wednesday</td>
+    <td>Thursday</td>
+    <td>Friday</td>
+  </tr>
+  <tr>
+    <td id="0"></td>
+    <td id="1"></td>
+    <td id="2"></td>
+    <td id="3"></td>
+    <td id="4"></td>
+  </tr>
+</table>
+
+<script>
+  const Http = new XMLHttpRequest();
+  Http.responseType = "json";
+  const url = "http://127.0.0.1:8000/";
+  Http.open("GET", url);
+  Http.send();
+  Http.onload = function(){
+
+    // const monday = document.getElementById("0");
+    // console.log(Http.response);
+    // monday.innerText = Http.response[0]["summary"];
+
+    for(let i=0; i<Http.response.length; i++) {
+      let day_of_week = Http.response[i]["day_of_week"];
+      let summary = Http.response[i]["summary"] + " ";
+      document.getElementById(day_of_week.toString()).innerHTML += `<p>${summary}</p>`
+    }
+
+   }
+
+</script>
+</body>
+</html>
