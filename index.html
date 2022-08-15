@@ -5,10 +5,54 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="">
 <style>
+  html {
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+  body {
+    margin: 0;
+    background-color: #333;
+  }
+
+  .container {
+    max-width: 900px;
+    width: 90%;
+    margin: 10px auto 0;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(5, 18%);
+    grid-gap: 10px;
+    align-items: center;
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .day-names {
+    background-color: #000;
+    color: aliceblue;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 0;
+  }
+
+  .data {
+    background-color: aliceblue;
+    color: #000;
+    min-height: 175px; /* TODO: get a better way to make blocks same size */
+    padding: 4px;
+    margin: 0;
+  }
 </style>
+
 <body>
 
-<table>
+  <!-- <table>
   <tr>
     <td>Monday</td>
     <td>Tuesday</td>
@@ -23,28 +67,48 @@
     <td id="3"></td>
     <td id="4"></td>
   </tr>
-</table>
+</table> -->
 
-<script>
-  const Http = new XMLHttpRequest();
-  Http.responseType = "json";
-  const url = "http://127.0.0.1:8000/";
-  Http.open("GET", url);
-  Http.send();
-  Http.onload = function(){
+  <div class="container">
+    <div class="grid">
+      <!-- <div class="row"> -->
+      <p class="day-names">Monday</p>
+      <p class="day-names">Tuesday</p>
+      <p class="day-names">Wednesday</p>
+      <p class="day-names">Thursday</p>
+      <p class="day-names">Friday</p>
+      <!-- </div> -->
+      <!-- <div class="row"> -->
+      <p id="0" class="data"></p>
+      <p id="1" class="data"></p>
+      <p id="2" class="data"></p>
+      <p id="3" class="data"></p>
+      <p id="4" class="data"></p>
+      <!-- </div> -->
+    </div>
+  </div>
 
-    // const monday = document.getElementById("0");
-    // console.log(Http.response);
-    // monday.innerText = Http.response[0]["summary"];
+  <script>
+    const Http = new XMLHttpRequest();
+    Http.responseType = "json";
+    const url = "http://127.0.0.1:8000/";
+    Http.open("GET", url);
+    Http.send();
+    Http.onload = function () {
 
-    for(let i=0; i<Http.response.length; i++) {
-      let day_of_week = Http.response[i]["day_of_week"];
-      let summary = Http.response[i]["summary"] + " ";
-      document.getElementById(day_of_week.toString()).innerHTML += `<p>${summary}</p>`
+      // const monday = document.getElementById("0");
+      // console.log(Http.response);
+      // monday.innerText = Http.response[0]["summary"];
+
+      for (let i = 0; i < Http.response.length; i++) {
+        let day_of_week = Http.response[i]["day_of_week"];
+        let summary = Http.response[i]["summary"] + " ";
+        document.getElementById(day_of_week.toString()).innerHTML += `<p>${summary}</p>`
+      }
+
     }
 
-   }
-
-</script>
+  </script>
 </body>
+
 </html>
