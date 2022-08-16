@@ -1,13 +1,13 @@
 from app import create_new_event, get_this_weeks_events
-from fastapi import FastAPI,Body
+from fastapi import FastAPI,Body, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Union
-from pydantic import BaseModel
+from schemas import Event
+from database import SessionLocal, engine
+import database
+from sqlalchemy.orm import sessionmaker, Session
 
-class Event(BaseModel):
-    summary: str
-    start: str 
-    end: str
+database.Base.metadata.create_all(bind=engine)
 
 app = FastAPI() #uvicorn main:app --reload
 
@@ -16,13 +16,18 @@ app.add_middleware(
     allow_origins=['*']
 )
 
-app.state.event_store = {}
-app.state.event_store[1] = "hello"
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
 
 @app.get("/")
 async def root():
     return get_this_weeks_events()
 
 @app.post("/event")
-async def create_event(event: Event):
-    create_new_event(event)
+async def create_event(event: Event, db: Session = Depends(get_db)):
+    create_new_event(event, db)

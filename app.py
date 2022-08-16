@@ -1,6 +1,9 @@
 from datetime import date, datetime, timedelta
 import requests
 from typing import Dict, List
+from database import create_event
+import schemas
+from sqlalchemy.orm import Session
 
 def get_this_weeks_weekdays() -> List[str]:
     today = date.today()
@@ -51,5 +54,7 @@ def get_this_weeks_events() -> List[Dict[str, str]]:
     this_weeks_events = get_events_from_rc_data(rc_data, this_weeks_dates)
     return this_weeks_events
 
-def create_new_event(event):
+def create_new_event(event: schemas.Event, db: Session):
     print(event)
+    db_event = create_event(event, db)
+    print(f"db event: {db_event}")
