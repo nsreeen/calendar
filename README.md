@@ -19,7 +19,6 @@ Start the service:
 
 
 ## Todos
-- consolidate rc and app events
 - place events in grid with times
 - timezones (show times in viewers timezone)
 - allow add events input
