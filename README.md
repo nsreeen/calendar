@@ -19,6 +19,8 @@ Start the service:
 
 
 ## Todos
+- allow add events input
 - place events in grid with times
 - timezones (show times in viewers timezone)
-- allow add events input
+- user data: online times
+- only owner can add events/ change online times?
