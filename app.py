@@ -50,3 +50,6 @@ def get_this_weeks_events() -> List[Dict[str, str]]:
     rc_data = rc_response.content.decode("utf-8")
     this_weeks_events = get_events_from_rc_data(rc_data, this_weeks_dates)
     return this_weeks_events
+
+def create_new_event(event):
+    print(event)
