@@ -9,7 +9,7 @@ from sqlalchemy.orm import sessionmaker, Session
 
 database.Base.metadata.create_all(bind=engine)
 
-app = FastAPI() #uvicorn main:app --reload
+app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
@@ -23,10 +23,9 @@ def get_db():
     finally:
         db.close()
 
-
 @app.get("/")
-async def root():
-    return get_this_weeks_events()
+async def root(db: Session = Depends(get_db)):
+    return get_this_weeks_events(db)
 
 @app.post("/event")
 async def create_event(event: Event, db: Session = Depends(get_db)):

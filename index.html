@@ -96,10 +96,6 @@
     Http.send();
     Http.onload = function () {
 
-      // const monday = document.getElementById("0");
-      // console.log(Http.response);
-      // monday.innerText = Http.response[0]["summary"];
-
       for (let i = 0; i < Http.response.length; i++) {
         let day_of_week = Http.response[i]["day_of_week"];
         let summary = Http.response[i]["summary"] + " ";
